@@ -14,9 +14,7 @@ cloudinary.config({
 const app = express();
 const port = 8000;
 
-app.get('/ok', (_req, res) => {
-  res.json('Hello World!');
-});
+require('./routes/Main.route')(app, cloudinary);
 
 app.get('/upload', (_req, res) => {
   cloudinary.uploader.upload('pizza2.jpeg', function (error, result) {
