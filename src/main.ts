@@ -3,18 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const cloudinary = require('cloudinary').v2;
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.C_API_KEY,
-  api_secret: process.env.C_API_SECRET,
-});
+import cloudinary from './config/cloudinary.config';
 
 const app = express();
-const port = 8000;
+const port = process.env.PORT || 8000;
 
-require('./routes/Main.route')(app, cloudinary);
+require('./routes/Main.route')(app);
+require('./routes/Photos.route')(app, cloudinary);
 
 app.get('/upload', (_req, res) => {
   cloudinary.uploader.upload('pizza2.jpeg', function (error, result) {
