@@ -1,14 +1,8 @@
-import { ICloundinaryResponse } from '../models/Cloudinary.interfaces';
 import * as core from 'express-serve-static-core';
+import { getAllPhotos } from '../controllers/Photo.controller';
 
-module.exports = (app: core.Express, cloudinary) => {
-  app.get('/photos', (_req, res) => {
-    cloudinary.api.resources((error, results: ICloundinaryResponse) => {
-      if (error) {
-        res.json(error);
-      } else {
-        res.json(results.resources);
-      }
-    });
-  });
+const photoRoutes = (app: core.Express) => {
+    app.route('/photos').get(getAllPhotos);
 };
+
+export default photoRoutes;
