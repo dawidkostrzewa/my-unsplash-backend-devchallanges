@@ -1,8 +1,8 @@
 import * as core from 'express-serve-static-core';
-import { getAllPhotos } from '../controllers/Photo.controller';
+import { addPhoto, getAllPhotos } from '../controllers/Photo.controller';
 
 const photoRoutes = (app: core.Express) => {
-    app.route('/photos').get(getAllPhotos);
+    app.route('/photos').get(getAllPhotos).post(addPhoto);
 };
 
 export default photoRoutes;
