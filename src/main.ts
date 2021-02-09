@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 dotenv.config();
+import cors from 'cors';
 
 import cloudinary from './config/cloudinary.config';
 import photoRoutes from './routes/Photos.route';
@@ -12,7 +13,8 @@ const port = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+//TODO: cors config
+app.use(cors());
 photoRoutes(app);
 mainRoute(app);
 
