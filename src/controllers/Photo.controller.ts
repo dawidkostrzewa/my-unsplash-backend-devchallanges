@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 
 export async function getAllPhotos(_req: Request, res: Response) {
     try {
-        const search = await cloudinary.search.with_field('tags').max_results(10).execute();
+        const search = await cloudinary.search.with_field('tags').execute();
         return res.json(search);
     } catch (error) {
         return res.json(error.error);
