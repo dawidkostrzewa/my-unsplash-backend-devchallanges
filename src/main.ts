@@ -13,7 +13,7 @@ const port = process.env.PORT || 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const allowlist = ['http://localhost:3000'];
+const allowlist = ['http://localhost:3000', 'https://unsplash.dkostrzewa.pl/'];
 
 const corsOptionsDelegate = (req, callback) => {
     let corsOptions = {};
