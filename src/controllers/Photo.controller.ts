@@ -3,6 +3,7 @@ import uploadFile from '../middleware/upload';
 import { Request, Response } from 'express';
 import fs from 'fs';
 import Error from '../models/Error.model';
+import { UPLOAD_PATH } from '../config/config';
 
 export async function getAllPhotos(_req: Request, res: Response) {
     try {
@@ -29,6 +30,11 @@ export async function addPhoto(req: Request, res: Response) {
 
 export async function upload(req, res: Response) {
     try {
+        const dir = UPLOAD_PATH;
+
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
         await uploadFile(req, res);
 
         if (req.file == undefined) {
