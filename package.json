@@ -6,6 +6,7 @@
     "node": ">= 14.15 <15"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.10",
     "@types/jest": "~26.0.19",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "~4.12.0",

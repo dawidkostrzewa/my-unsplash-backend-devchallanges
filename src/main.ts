@@ -12,8 +12,24 @@ const port = process.env.PORT || 8000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-//TODO: cors config
-app.use(cors());
+
+const allowlist = ['http://localhost:3000'];
+
+const corsOptionsDelegate = (req, callback) => {
+    let corsOptions = {};
+
+    const isDomainAllowed = allowlist.indexOf(req.header('Origin')) !== -1;
+
+    if (isDomainAllowed) {
+        corsOptions = { origin: true };
+    } else {
+        corsOptions = { origin: false };
+    }
+    callback(null, corsOptions);
+};
+
+app.use(cors(corsOptionsDelegate));
+
 photoRoutes(app);
 mainRoute(app);
 

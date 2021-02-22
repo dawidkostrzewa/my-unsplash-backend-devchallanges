@@ -1,6 +1,8 @@
 import cloudinary from '../config/cloudinary.config';
 import uploadFile from '../middleware/upload';
 import { Request, Response } from 'express';
+import fs from 'fs';
+import Error from '../models/Error.model';
 
 export async function getAllPhotos(_req: Request, res: Response) {
     try {
@@ -14,8 +16,8 @@ export async function getAllPhotos(_req: Request, res: Response) {
 export async function addPhoto(req: Request, res: Response) {
     const file = await upload(req, res);
     if (file) {
-        //TODO: przeniesci do controllera cloudinary
         cloudinary.uploader.upload(file.path, { tags: req.body.tags || '' }, function (error, result) {
+            fs.unlink(file.path, (err) => console.log(err));
             if (error) {
                 return res.json(error);
             } else {
@@ -30,17 +32,14 @@ export async function upload(req, res: Response) {
         await uploadFile(req, res);
 
         if (req.file == undefined) {
-            //TODO: ujednolicic bledy
-            res.status(400).send({ message: 'Please upload a file!' });
+            res.status(400).send(new Error('Please upload a file!'));
             return false;
         }
 
         return req.file;
     } catch (err) {
-        //TODO: ujednolicic bledy
-        res.status(500).send({
-            message: `Could not upload the file: ${req.file?.originalname}. ${err}`
-        });
+        res.status(500).send(new Error(`Could not upload the file: ${req.file?.originalname}. ${err}`));
+
         return false;
     }
 }
